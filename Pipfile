@@ -4,10 +4,9 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-ipdb = "*"
 
 [packages]
-defectdojo-api-swagger = {git = "https://github.com/William-Hill-Online/defectdojo-api-swagger.git", ref = "dev"}
+defectdojo-api-swagger = {git = "https://github.com/William-Hill-Online/defectdojo-api-swagger.git",ref = "dev"}
 
 [requires]
 python_version = "3.6"

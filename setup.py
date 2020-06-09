@@ -16,11 +16,18 @@ with open('Pipfile.lock') as fd:
     lock_data = json.load(fd)
     install_requires = [
         package_name + package_data['version']
-        for package_name, package_data in lock_data['default'].items()
+        for package_name, package_data in lock_data['default'].items() \
+            if package_data.get('version')
     ]
     tests_require = [
         package_name + package_data['version']
-        for package_name, package_data in lock_data['develop'].items()
+        for package_name, package_data in lock_data['develop'].items() \
+            if package_data.get('version')
+    ]
+    dependency_links = [
+        package_data['git'] + '#egg=' + package_data['ref']
+        for package_name, package_data in lock_data['default'].items() \
+            if package_data.get('git')
     ]
 
 setup(
@@ -33,6 +40,7 @@ setup(
     keywords=['CCVS API'],
     install_requires=install_requires,
     tests_require=tests_require,
+    dependency_links=dependency_links,
     packages=find_packages(),
     include_package_data=True,
     entry_points={
