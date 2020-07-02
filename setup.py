@@ -45,7 +45,7 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            'dd-reporting=defectdojo_reporting.reporting:Main',
+            'dd-reporting=defectdojo_reporting.cli:main',
         ],
     },
     long_description="""\
