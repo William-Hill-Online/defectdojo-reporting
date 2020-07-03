@@ -14,27 +14,27 @@ def summary_sla(total_findings):
         finding for finding in total_findings if finding.verified is False
     ]
     if len(findings_not_verified) > 0:
-        print("=============================================================")
+        print("======================================================================")
         print(f"Total number of findings not verified: {len(findings_not_verified)}")
-        print("=============================================================")
+        print("======================================================================")
         print_findings(reporting.sum_severity(findings_not_verified))
         print("")
         print("Build Failed!")
-        print("=============================================================")
+        print("======================================================================")
         exit(1)
     
     findings_sla_overdue = [
         finding for finding in total_findings if (finding.sla_days_remaining or 0) < 0
     ]
     if len(findings_sla_overdue) > 0:
-        print("=============================================================")
+        print("======================================================================")
         # finding sla_days_remaining cannot be negative(SLA overdue)
         print(f"Total number of findings with SLA overdue: {len(findings_sla_overdue)}")
-        print("=============================================================")
+        print("======================================================================")
         print_findings(reporting.sum_severity(findings_sla_overdue))
         print("")
         print("Build Failed! :(")
-        print("=============================================================")
+        print("======================================================================")
         exit(1)
 
 def summary_level_severity(total_findings, control_level):
@@ -52,22 +52,22 @@ def summary_level_severity(total_findings, control_level):
             if min_level <= severity_control[finding.severity]
     ]
     if len(findings_filtered) > 0:
-        print("=============================================================")
+        print("======================================================================")
         print(f"Total number of findings with control severity violated: {len(findings_filtered)}")
-        print("=============================================================")
+        print("======================================================================")
         print_findings(reporting.sum_severity(findings_filtered))
         print("")
         print("Build Failed! :(")
-        print("=============================================================")
+        print("======================================================================")
         exit(1)
 
 def summary(api_client, test_id, control_sla, control_level):
     total_findings = reporting.list_findings(
         api_client, test=test_id, duplicate=False, active=True)
 
-    print("=============================================================")
+    print("======================================================================")
     print(f"Total number of findings: {len(total_findings)}")
-    print("=============================================================")
+    print("======================================================================")
     print_findings(reporting.sum_severity(total_findings))
     print("")
 
@@ -77,10 +77,10 @@ def summary(api_client, test_id, control_sla, control_level):
         summary_level_severity(total_findings, control_level)
     
     if len(total_findings) > 0:
-        print("Build Passed! But there are issues to fix yet :/")
+        print("Build Passed! But there issue to fix :/")
     else:
         print("Build Passed! :)")
-    print("=============================================================")
+    print("======================================================================")
     exit(0)
 
 
