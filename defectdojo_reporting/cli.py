@@ -91,9 +91,9 @@ def main():
     # auth
     parser.add_argument('--host', help="DefectDojo Hostname", required=True)
     parser.add_argument('--api_token', help="API Key", required=True)
-    parser.add_argument('--user', help="User", required=True)
 
     # project
+    parser.add_argument('--lead_testing', help="Lead Testing", required=True)
     parser.add_argument(
         '--product', help="DefectDojo Product ID", required=True, type=int)
     parser.add_argument('--repo', help="Repo Name", required=True)
@@ -121,7 +121,7 @@ def main():
     # auth
     host = args["host"]
     api_token = args["api_token"]
-    user = args["user"]
+    lead_testing = args["lead_testing"]
 
     # project
     product = args["product"]
@@ -138,7 +138,7 @@ def main():
     push_to_jira = args["push_to_jira"]
     
     api_client = reporting.get_api_client(host, api_token)
-    user_id = reporting.get_user_id(api_client, user)
+    user_id = reporting.get_user_id(api_client, lead_testing)
     test_type_obj = reporting.get_test_type(api_client, test_type_id)
     product_id = reporting.get_product_id(api_client, product)
     engagement_id = reporting.get_engagement_id(

@@ -36,7 +36,7 @@ setup(
     description='CCVS API Client',
     author='Ederson Brilhante',
     author_email='ederson.brilhante@grandparade.co.uk',
-    url='https://github.com/William-Hill-Online/CCVS-API-Client',
+    url='https://github.com/William-Hill-Online/defectdojo-reporting',
     keywords=['CCVS API'],
     install_requires=install_requires,
     tests_require=tests_require,
@@ -45,7 +45,7 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            'dd-reporting=defectdojo_reporting.cli:main',
+            'defectdojo-reporting=defectdojo_reporting.cli:main',
         ],
     },
     long_description="""\
