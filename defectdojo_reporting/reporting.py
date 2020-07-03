@@ -135,35 +135,14 @@ def list_findings(api_client, **kwargs):
 
 
 def sum_severity(findings):
-    severity = [0, 0, 0, 0, 0]
+    severity = {
+        'Critical': 0,
+        'High': 0,
+        'Medium': 0,
+        'Low': 0,
+        'Info': 0
+    }
     for finding in findings:
-        if finding.severity == "Critical":
-            severity[4] = severity[4] + 1
-        if finding.severity == "High":
-            severity[3] = severity[3] + 1
-        if finding.severity == "Medium":
-            severity[2] = severity[2] + 1
-        if finding.severity == "Low":
-            severity[1] = severity[1] + 1
-        if finding.severity == "Info":
-            severity[0] = severity[0] + 1
-
-    return severity
-
-
-def sum_severity_sla(findings):
-    severity = [0, 0, 0, 0, 0]
-    for finding in findings:
-        if finding.sla_days_remaining < 0:
-            if finding.severity == "Critical":
-                severity[4] = severity[4] + 1
-            if finding.severity == "High":
-                severity[3] = severity[3] + 1
-            if finding.severity == "Medium":
-                severity[2] = severity[2] + 1
-            if finding.severity == "Low":
-                severity[1] = severity[1] + 1
-            if finding.severity == "Info":
-                severity[0] = severity[0] + 1
+        severity[finding.severity] += 1
 
     return severity
