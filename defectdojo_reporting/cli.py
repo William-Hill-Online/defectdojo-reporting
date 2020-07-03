@@ -145,8 +145,8 @@ def main():
         api_client, product_id, user_id, repo, branch_name)
     test_id = reporting.get_test_id(
         api_client, engagement_id, test_type_obj.name, test_type_obj.id, 1)
-    # reporting.reimport(
-    #     api_client, test_id, file, True, test_type_obj.name, push_to_jira)
+    reporting.reimport(
+        api_client, test_id, file, True, test_type_obj.name, push_to_jira)
     summary(api_client, test_id, control_sla, control_level)
 
 if __name__ == '__main__':
