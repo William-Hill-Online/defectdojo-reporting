@@ -53,7 +53,7 @@ def summary_level_severity(total_findings, control_level):
     ]
     if len(findings_filtered) > 0:
         print("======================================================================")
-        print(f"Total number of findings with control severity violoted: {len(findings_filtered)}")
+        print(f"Total number of findings with control severity violated: {len(findings_filtered)}")
         print("======================================================================")
         print_findings(reporting.sum_severity(findings_filtered))
         print("")
