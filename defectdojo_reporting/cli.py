@@ -102,7 +102,7 @@ def main():
     
     # importing results
     parser.add_argument('--file', help="Findings file", required=True)
-    parser.add_argument('--test_type_id', help="Scanner Type ID", required=True)
+    parser.add_argument('--test_type_id', help="Scanner Type ID", required=True, type=int)
 
     # controls
     parser.add_argument(
