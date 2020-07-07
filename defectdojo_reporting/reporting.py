@@ -1,23 +1,23 @@
 from urllib.parse import urlparse, parse_qs
-import defectdojo_openapi
-from defectdojo_openapi.rest import ApiException
+import defectdojo_api_client
+from defectdojo_api_client.rest import ApiException
 from datetime import datetime, timedelta
 
 
 def get_api_client(host, api_token):
     # Configure API key authorization: api_key
-    configuration = defectdojo_openapi.Configuration(
+    configuration = defectdojo_api_client.Configuration(
         host = host,
         api_key = {
             'api_key': f'Token {api_token}'
         }
     )
     # configuration.api_key_prefix['api_key'] = f'Token {api_token}'
-    return defectdojo_openapi.ApiClient(configuration)
+    return defectdojo_api_client.ApiClient(configuration)
 
 
 def get_user_id(api_client, username):
-    api_instance = defectdojo_openapi.UsersApi(api_client)
+    api_instance = defectdojo_api_client.UsersApi(api_client)
     users = api_instance.users_list(username=username)
 
     if users.count == 1:
@@ -27,7 +27,7 @@ def get_user_id(api_client, username):
 
 
 def get_product_id(api_client, product_id):    
-    api_instance = defectdojo_openapi.ProductsApi(api_client)
+    api_instance = defectdojo_api_client.ProductsApi(api_client)
     try:
         products = api_instance.products_read(id=product_id)
         return products.id
@@ -37,7 +37,7 @@ def get_product_id(api_client, product_id):
 
 def get_engagement_id(api_client, product_id, user_id, repo, branch):
     engagement_branch = f'{repo} ({branch})'
-    api_instance = defectdojo_openapi.EngagementsApi(api_client)
+    api_instance = defectdojo_api_client.EngagementsApi(api_client)
 
     engagements = api_instance.engagements_list(
         name=engagement_branch, product=product_id)
@@ -52,7 +52,7 @@ def get_engagement_id(api_client, product_id, user_id, repo, branch):
         status = "In Progress"
         engagement_type = "CI/CD"
 
-        data = defectdojo_openapi.Engagement(
+        data = defectdojo_api_client.Engagement(
             name=engagement_branch,
             engagement_type=engagement_type,
             product=product_id,
@@ -68,7 +68,7 @@ def get_engagement_id(api_client, product_id, user_id, repo, branch):
 
 
 def get_test_id(api_client, engagement_id, test_name, test_type_id, environment):
-    api_instance = defectdojo_openapi.TestsApi(api_client)
+    api_instance = defectdojo_api_client.TestsApi(api_client)
     tests = api_instance.tests_list(engagement=engagement_id,
                                     title=test_name)
 
@@ -79,7 +79,7 @@ def get_test_id(api_client, engagement_id, test_name, test_type_id, environment)
         target_start = datetime.now()
         target_end = target_start + timedelta(days=10)
 
-        data = defectdojo_openapi.Test(
+        data = defectdojo_api_client.Test(
             title=test_name,
             engagement=engagement_id,
             test_type=test_type_id,
@@ -93,7 +93,7 @@ def get_test_id(api_client, engagement_id, test_name, test_type_id, environment)
 
 
 def get_test_type(api_client, test_type_id):
-    api_instance = defectdojo_openapi.TestTypesApi(api_client)
+    api_instance = defectdojo_api_client.TestTypesApi(api_client)
     try:
         test = api_instance.test_types_read(id=test_type_id)
         return test
@@ -104,7 +104,7 @@ def get_test_type(api_client, test_type_id):
 def reimport(api_client, test_id, file, active, test_type, push_to_jira):
     date = datetime.now()
 
-    api_instance = defectdojo_openapi.ReimportScanApi(api_client)    
+    api_instance = defectdojo_api_client.ReimportScanApi(api_client)    
     
     scan = api_instance.reimport_scan_create(
         test=test_id,
@@ -118,7 +118,7 @@ def reimport(api_client, test_id, file, active, test_type, push_to_jira):
 
 
 def list_findings(api_client, **kwargs):
-    api_instance = defectdojo_openapi.FindingsApi(api_client)
+    api_instance = defectdojo_api_client.FindingsApi(api_client)
     all_findings = []
     while True:
         findings = api_instance.findings_list(**kwargs)
