@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "fb75999e1f99482384d292696145cc11e583e65ab7fb77df2c01773abc80e61d"
+            "sha256": "94503f5d7d4542ca9fecda846c29e7decc87b903a2ffdf9b4e150f6f3c74fe36"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,9 +16,9 @@
         ]
     },
     "default": {
-        "defectdojo-openapi": {
-            "git": "https://github.com/William-Hill-Online/defectdojo-api-swagger.git",
-            "ref": "778c19e86f1036fa613b51a9290a6c78013aa042"
+        "defectdojo-api-client": {
+            "git": "https://github.com/William-Hill-Online/defectdojo-api-client.git",
+            "ref": "852ff5aa3d26e92637b5948c4bc31d9d71884cdc"
         }
     },
     "develop": {}

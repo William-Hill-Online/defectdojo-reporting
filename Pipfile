@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-defectdojo-openapi = {git = "https://github.com/William-Hill-Online/defectdojo-api-swagger.git",ref = "openapi-generator"}
+defectdojo-api-client = {git = "https://github.com/William-Hill-Online/defectdojo-api-client.git"}
 
 [requires]
 python_version = "3.6"
