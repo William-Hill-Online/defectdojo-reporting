@@ -15,9 +15,9 @@ pip install git+https://github.com/William-Hill-Online/defectdojo-reporting.git
 | host               | DefectDojo Hostname                 | string                                   | yes      | http://localhost:8080/api/v2             |
 | api_token          | API Key                             | string                                   | yes      | 41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 |
 | lead_testing       | Lead Testing                        | string                                   | yes      | gitlabci                                 |
-| product            | DefectDojo Product ID               | int                                      | yes      | master                                   |
-| repo               | Repo Name                           | string                                   | yes      | 5                                        |
-| branch_name        | Reference to branch being scanned   | string                                   | yes      | appsec/repo-abc                          |
+| product            | DefectDojo Product ID               | int                                      | yes      | 5                                        |
+| repo               | Repo Name                           | string                                   | yes      | appsec/repo-abc                          |
+| branch_name        | Reference to branch being scanned   | string                                   | yes      | master                                   |
 | file               | Findings file                       | string                                   | yes      | /tmp/ccvs.json                           |
 | test_type_id       | Scanner Type ID                     | int                                      | yes      | 181                                      |
 | control_sla        | Does this branch have SLA control?  | bool                                     | no       | false                                    |
