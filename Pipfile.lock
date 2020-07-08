@@ -1,0 +1,25 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "94503f5d7d4542ca9fecda846c29e7decc87b903a2ffdf9b4e150f6f3c74fe36"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.6"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "defectdojo-api-client": {
+            "git": "https://github.com/William-Hill-Online/defectdojo-api-client.git",
+            "ref": "852ff5aa3d26e92637b5948c4bc31d9d71884cdc"
+        }
+    },
+    "develop": {}
+}
