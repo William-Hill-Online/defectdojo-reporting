@@ -61,7 +61,7 @@ def summary_level_severity(total_findings, control_level):
         print("=============================================================")
         exit(1)
 
-def summary(api_client, test_id, control_sla, control_level):
+def summary(api_client, test_id, control_level):
     total_findings = reporting.list_findings(
         api_client, test=test_id, duplicate=False, active=True)
 
@@ -71,9 +71,9 @@ def summary(api_client, test_id, control_sla, control_level):
     print_findings(reporting.sum_severity(total_findings))
     print("")
 
-    if control_sla is True:
+    if control_level == 'sla':
         summary_sla(total_findings)
-    elif control_level:
+    else:
         summary_level_severity(total_findings, control_level)
     
     if len(total_findings) > 0:
@@ -106,11 +106,8 @@ def main():
 
     # controls
     parser.add_argument(
-        '--control_sla', help="Does this branch have SLA control?", 
-        type=bool, default=False)
-    parser.add_argument(
         '--control_level', help="Minimum level of severity control", 
-        choices=['critical', 'high', 'medium', 'low', 'info'], 
+        choices=['critical', 'high', 'medium', 'low', 'info', 'sla'], 
         required=False, default='info')
     parser.add_argument(
         '--push_to_jira', help="Push to Jira?", required=False, 
@@ -133,7 +130,6 @@ def main():
     test_type_id = args["test_type_id"]
     
     # controls
-    control_sla = args["control_sla"]
     control_level = args["control_level"]
     push_to_jira = args["push_to_jira"]
     
@@ -147,7 +143,7 @@ def main():
         api_client, engagement_id, test_type_obj.name, test_type_obj.id, 1)
     reporting.reimport(
         api_client, test_id, file, True, test_type_obj.name, push_to_jira)
-    summary(api_client, test_id, control_sla, control_level)
+    summary(api_client, test_id, control_level)
 
 if __name__ == '__main__':
     main()

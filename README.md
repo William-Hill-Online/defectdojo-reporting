@@ -10,19 +10,18 @@ pip install git+https://github.com/William-Hill-Online/defectdojo-reporting.git
 ## Usage
 
 ### CLI paramters
-| Param              | Description                         | Type                                     | Required | Example                                  |
-|--------------------|-------------------------------------|------------------------------------------|----------|------------------------------------------|
-| host               | DefectDojo Hostname                 | string                                   | yes      | http://localhost:8080/api/v2             |
-| api_token          | API Key                             | string                                   | yes      | 41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 |
-| lead_testing       | Lead Testing                        | string                                   | yes      | gitlabci                                 |
-| product            | DefectDojo Product ID               | int                                      | yes      | 5                                        |
-| repo               | Repo Name                           | string                                   | yes      | appsec/repo-abc                          |
-| branch_name        | Reference to branch being scanned   | string                                   | yes      | master                                   |
-| file               | Findings file                       | string                                   | yes      | /tmp/ccvs.json                           |
-| test_type_id       | Scanner Type ID                     | int                                      | yes      | 181                                      |
-| control_sla        | Does this branch have SLA control?  | bool                                     | no       | false                                    |
-| control_level      | Minimum level of severity control   | enum(critical, high, medium, low, info)  | no       | medium                                   |
-| push_to_jira       | Push to Jira?                       | bool                                     | no       | false                                    |
+| Param              | Description                         | Type                                         | Required | Example                                  |
+|--------------------|-------------------------------------|----------------------------------------------|----------|------------------------------------------|
+| host               | DefectDojo Hostname                 | string                                       | yes      | http://localhost:8080/api/v2             |
+| api_token          | API Key                             | string                                       | yes      | 41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 |
+| lead_testing       | Lead Testing                        | string                                       | yes      | gitlabci                                 |
+| product            | DefectDojo Product ID               | int                                          | yes      | 5                                        |
+| repo               | Repo Name                           | string                                       | yes      | appsec/repo-abc                          |
+| branch_name        | Reference to branch being scanned   | string                                       | yes      | master                                   |
+| file               | Findings file                       | string                                       | yes      | /tmp/ccvs.json                           |
+| test_type_id       | Scanner Type ID                     | int                                          | yes      | 181                                      |
+| control_level      | Minimum level of severity control   | enum(critical, high, medium, low, info, sla) | no       | medium                                   |
+| push_to_jira       | Push to Jira?                       | bool                                         | no       | false                                    |
 
 
 ### Using in CI to have Quality Gate
@@ -70,7 +69,7 @@ Build Passed! But there are issues to fix yet :/
 
 **Example of build passing with warning because there no SLAs overdue, but there are issues to fix**
 ```
-defectdojo-reporting --host=http://localhost:8080/api/v2 --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 --lead_testing=gitlabci --branch_name=master --product=5 --repo="appsec/repo-abc" --file=/tmp/ccvs.json  --test_type_id=181 --control_sla
+defectdojo-reporting --host=http://localhost:8080/api/v2 --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 --lead_testing=gitlabci --branch_name=master --product=5 --repo="appsec/repo-abc" --file=/tmp/ccvs.json  --test_type_id=181 --control_level=sla
 =============================================================
 Total number of findings: 227
 =============================================================
@@ -86,7 +85,7 @@ Build Passed! But there are issues to fix yet :/
 
 **Example of build failing because there are SLAs overdue**
 ```
-defectdojo-reporting --host=http://localhost:8080/api/v2 --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 --lead_testing=gitlabci --branch_name=master --product=5 --repo="appsec/repo-abc" --file=/tmp/ccvs.json  --test_type_id=181 --control_sla
+defectdojo-reporting --host=http://localhost:8080/api/v2 --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 --lead_testing=gitlabci --branch_name=master --product=5 --repo="appsec/repo-abc" --file=/tmp/ccvs.json  --test_type_id=181 --control_level=sla
 =============================================================
 Total number of findings: 227
 =============================================================
