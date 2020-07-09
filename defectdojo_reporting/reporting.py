@@ -4,13 +4,14 @@ from defectdojo_api_client.rest import ApiException
 from datetime import datetime, timedelta
 
 
-def get_api_client(host, api_token):
+def get_api_client(host, api_token, ssl_ca_cert):
     # Configure API key authorization: api_key
     configuration = defectdojo_api_client.Configuration(
         host = host,
         api_key = {
             'api_key': f'Token {api_token}'
-        }
+        },
+        ssl_ca_cert= ssl_ca_cert
     )
     # configuration.api_key_prefix['api_key'] = f'Token {api_token}'
     return defectdojo_api_client.ApiClient(configuration)

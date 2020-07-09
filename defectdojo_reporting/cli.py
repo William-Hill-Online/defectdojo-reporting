@@ -89,8 +89,10 @@ def main():
         description='CI/CD integration for DefectDojo')
     
     # auth
+    parser.add_argument('--ssl_ca_cert', help="SSL CA CERT", required=True)
     parser.add_argument('--host', help="DefectDojo Hostname", required=True)
     parser.add_argument('--api_token', help="API Key", required=True)
+    
 
     # project
     parser.add_argument('--lead_testing', help="Lead Testing", required=True)
