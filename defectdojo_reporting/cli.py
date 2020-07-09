@@ -88,8 +88,11 @@ def main():
     parser = argparse.ArgumentParser(
         description='CI/CD integration for DefectDojo')
     
-    # auth
+    # connection
+    parser.add_argument('--ssl_ca_cert', help="SSL CA CERT", required=True)
     parser.add_argument('--host', help="DefectDojo Hostname", required=True)
+
+    # auth
     parser.add_argument('--api_token', help="API Key", required=True)
 
     # project
@@ -115,12 +118,15 @@ def main():
 
     args = vars(parser.parse_args())
 
-    # auth
+    # connection
+    ssl_ca_cert = args["ssl_ca_cert"]
     host = args["host"]
+
+    # auth
     api_token = args["api_token"]
-    lead_testing = args["lead_testing"]
 
     # project
+    lead_testing = args["lead_testing"]
     product = args["product"]
     repo = args["repo"]
     branch_name = args["branch_name"]
@@ -133,7 +139,7 @@ def main():
     control_level = args["control_level"]
     push_to_jira = args["push_to_jira"]
     
-    api_client = reporting.get_api_client(host, api_token)
+    api_client = reporting.get_api_client(host, api_token, ssl_ca_cert)
     user_id = reporting.get_user_id(api_client, lead_testing)
     test_type_obj = reporting.get_test_type(api_client, test_type_id)
     product_id = reporting.get_product_id(api_client, product)
