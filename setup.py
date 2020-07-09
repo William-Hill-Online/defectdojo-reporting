@@ -7,7 +7,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 NAME = 'defectdojo-reporting'
-VERSION = '1.0.0'
+VERSION = '0.2.0'
 
 install_requires = []
 tests_require = []
