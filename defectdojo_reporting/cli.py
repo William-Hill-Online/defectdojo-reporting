@@ -135,7 +135,7 @@ def main():
     control_level = args["control_level"]
     push_to_jira = args["push_to_jira"]
     
-    api_client = reporting.get_api_client(host, api_token)
+    api_client = reporting.get_api_client(host, api_token, ssl_ca_cert)
     user_id = reporting.get_user_id(api_client, lead_testing)
     test_type_obj = reporting.get_test_type(api_client, test_type_id)
     product_id = reporting.get_product_id(api_client, product)
