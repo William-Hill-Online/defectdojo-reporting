@@ -71,7 +71,7 @@ def summary(api_client, test_id, control_sla, control_level):
     print_findings(reporting.sum_severity(total_findings))
     print("")
 
-    if control_sla:
+    if control_sla is True:
         summary_sla(total_findings)
     elif control_level:
         summary_level_severity(total_findings, control_level)

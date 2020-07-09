@@ -70,7 +70,7 @@ Build Passed! But there are issues to fix yet :/
 
 **Example of build passing with warning because there no SLAs overdue, but there are issues to fix**
 ```
-defectdojo-reporting --host=http://localhost:8080/api/v2 --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 --lead_testing=gitlabci --branch_name=master --product=5 --repo="appsec/repo-abc" --file=/tmp/ccvs.json  --test_type_id=181 --control_sla=true
+defectdojo-reporting --host=http://localhost:8080/api/v2 --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 --lead_testing=gitlabci --branch_name=master --product=5 --repo="appsec/repo-abc" --file=/tmp/ccvs.json  --test_type_id=181 --control_sla
 =============================================================
 Total number of findings: 227
 =============================================================
@@ -86,7 +86,7 @@ Build Passed! But there are issues to fix yet :/
 
 **Example of build failing because there are SLAs overdue**
 ```
-defectdojo-reporting --host=http://localhost:8080/api/v2 --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 --lead_testing=gitlabci --branch_name=master --product=5 --repo="appsec/repo-abc" --file=/tmp/ccvs.json  --test_type_id=181 --control_sla=true
+defectdojo-reporting --host=http://localhost:8080/api/v2 --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 --lead_testing=gitlabci --branch_name=master --product=5 --repo="appsec/repo-abc" --file=/tmp/ccvs.json  --test_type_id=181 --control_sla
 =============================================================
 Total number of findings: 227
 =============================================================
