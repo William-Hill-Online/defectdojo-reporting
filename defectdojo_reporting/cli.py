@@ -91,8 +91,7 @@ def main():
     # auth
     parser.add_argument('--ssl_ca_cert', help="SSL CA CERT", required=True)
     parser.add_argument('--host', help="DefectDojo Hostname", required=True)
-    parser.add_argument('--api_token', help="API Key", required=True)
-    
+    parser.add_argument('--api_token', help="API Key", required=True)    
 
     # project
     parser.add_argument('--lead_testing', help="Lead Testing", required=True)
@@ -119,6 +118,7 @@ def main():
 
     # auth
     host = args["host"]
+    ssl_ca_cert = args["ssl_ca_cert"]
     api_token = args["api_token"]
     lead_testing = args["lead_testing"]
 
