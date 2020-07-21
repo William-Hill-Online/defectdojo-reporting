@@ -134,6 +134,7 @@ def main():
     # importing results
     file = args["file"]
     test_type_id = args["test_type_id"]
+    scan_type = args["scan_type"]
     
     # controls
     control_level = args["control_level"]
@@ -148,7 +149,7 @@ def main():
     test_id = reporting.get_test_id(
         api_client, engagement_id, test_type_obj.name, test_type_obj.id, 1)
     reporting.reimport(
-        api_client, test_id, file, True, test_type_obj.name, push_to_jira)
+        api_client, test_id, file, True, scan_type, push_to_jira)
     summary(api_client, test_id, control_level)
 
 if __name__ == '__main__':
