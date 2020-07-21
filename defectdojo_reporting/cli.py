@@ -64,7 +64,16 @@ def summary_level_severity(total_findings, control_level):
 def summary(api_client, test_id, control_level):
     total_findings = reporting.list_findings(
         api_client, test=test_id, duplicate=False, active=True)
-
+    
+    print("=============================================================")
+    print("Sumary")
+    print("=============================================================")
+    host = api_client.configuration.host    
+    link = f"{host[0:host.find('/api')]}/test/{test_id}"
+    print(f"Dashboard: {link}")
+    print(f"Severity Control: {control_level.upper()}")
+    print("")
+    
     print("=============================================================")
     print(f"Total number of findings: {len(total_findings)}")
     print("=============================================================")
@@ -105,7 +114,8 @@ def main():
     
     # importing results
     parser.add_argument('--file', help="Findings file", required=True)
-    parser.add_argument('--test_type_id', help="Scanner Type ID", required=True, type=int)
+    parser.add_argument('--test_type_id', help="Test Type ID", required=True, type=int)
+    parser.add_argument('--scan_type', help="Scan Type", required=True)
 
     # controls
     parser.add_argument(

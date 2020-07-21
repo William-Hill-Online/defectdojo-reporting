@@ -20,7 +20,7 @@ pip install git+https://github.com/William-Hill-Online/defectdojo-reporting.git
 | branch_name        | Reference to branch being scanned   | string                                       | yes      | master                                   |
 | file               | Findings file                       | string                                       | yes      | /tmp/ccvs.json                           |
 | test_type_id       | Test Type ID                        | int                                          | yes      | 181                                      |
-| scan_type          | Scanner Type                        | string                                       | yes      | CCVS Report                              |
+| scan_type          | Scan Type                           | string                                       | yes      | CCVS Report                              |
 | control_level      | Minimum level of severity control   | enum(critical, high, medium, low, info, sla) | no       | medium                                   |
 | push_to_jira       | Push to Jira?                       | bool                                         | no       | false                                    |
 
