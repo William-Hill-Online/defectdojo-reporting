@@ -98,14 +98,14 @@ def get_test_type(api_client, test_type_id):
         raise ValueError('Test Type not found: ' + str(test_type_id))
 
 
-def reimport(api_client, test_id, file, active, test_type, push_to_jira):
+def reimport(api_client, test_id, file, active, scan_type, push_to_jira):
     date = datetime.now()
 
     api_instance = defectdojo_api_client.ReimportScanApi(api_client)    
     
     scan = api_instance.reimport_scan_create(
         test=test_id,
-        scan_type=test_type,
+        scan_type=scan_type,
         file=file,
         active=active,
         scan_date=date.date(),

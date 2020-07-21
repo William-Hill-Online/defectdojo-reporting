@@ -64,7 +64,16 @@ def summary_level_severity(total_findings, control_level):
 def summary(api_client, test_id, control_level):
     total_findings = reporting.list_findings(
         api_client, test=test_id, duplicate=False, active=True)
-
+    
+    print("=============================================================")
+    print("Summary")
+    print("=============================================================")
+    host = api_client.configuration.host    
+    link = f"{host[0:host.find('/api')]}/test/{test_id}"
+    print(f"Dashboard: {link}")
+    print(f"Severity Control: {control_level.upper()}")
+    print("")
+    
     print("=============================================================")
     print(f"Total number of findings: {len(total_findings)}")
     print("=============================================================")
@@ -105,7 +114,8 @@ def main():
     
     # importing results
     parser.add_argument('--file', help="Findings file", required=True)
-    parser.add_argument('--test_type_id', help="Scanner Type ID", required=True, type=int)
+    parser.add_argument('--test_type_id', help="Test Type ID", required=True, type=int)
+    parser.add_argument('--scan_type', help="Scan Type", required=True)
 
     # controls
     parser.add_argument(
@@ -134,6 +144,7 @@ def main():
     # importing results
     file = args["file"]
     test_type_id = args["test_type_id"]
+    scan_type = args["scan_type"]
     
     # controls
     control_level = args["control_level"]
@@ -148,7 +159,7 @@ def main():
     test_id = reporting.get_test_id(
         api_client, engagement_id, test_type_obj.name, test_type_obj.id, 1)
     reporting.reimport(
-        api_client, test_id, file, True, test_type_obj.name, push_to_jira)
+        api_client, test_id, file, True, scan_type, push_to_jira)
     summary(api_client, test_id, control_level)
 
 if __name__ == '__main__':
