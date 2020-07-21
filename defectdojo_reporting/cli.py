@@ -66,7 +66,7 @@ def summary(api_client, test_id, control_level):
         api_client, test=test_id, duplicate=False, active=True)
     
     print("=============================================================")
-    print("Sumary")
+    print("Summary")
     print("=============================================================")
     host = api_client.configuration.host    
     link = f"{host[0:host.find('/api')]}/test/{test_id}"
