@@ -106,9 +106,9 @@ def main():
 
     # project
     parser.add_argument('--lead_testing', help="Lead Testing", required=True)
-    parser.add_argument(
-        '--product', help="DefectDojo Product ID", required=True, type=int)
     parser.add_argument('--repo', help="Repo Name", required=True)
+    parser.add_argument('--team', help="Team", required=True)
+    parser.add_argument('--tags', help="Tags", required=True)
     parser.add_argument(
         '--branch_name', help="Reference to branch being scanned", required=True)
     
@@ -137,7 +137,8 @@ def main():
 
     # project
     lead_testing = args["lead_testing"]
-    product = args["product"]
+    team = args["team"]
+    tags = args["tags"].split(',')
     repo = args["repo"]
     branch_name = args["branch_name"]
     
@@ -153,9 +154,10 @@ def main():
     api_client = reporting.get_api_client(host, api_token, ssl_ca_cert)
     user_id = reporting.get_user_id(api_client, lead_testing)
     test_type_obj = reporting.get_test_type(api_client, test_type_id)
-    product_id = reporting.get_product_id(api_client, product)
+    product_type_id = reporting.get_product_type_id(api_client, team)
+    product_id = reporting.get_product_id(api_client, product_type_id, repo, tags)
     engagement_id = reporting.get_engagement_id(
-        api_client, product_id, user_id, repo, branch_name)
+        api_client, product_id, user_id, branch_name)
     test_id = reporting.get_test_id(
         api_client, engagement_id, test_type_obj.name, test_type_obj.id, 1)
     reporting.reimport(
