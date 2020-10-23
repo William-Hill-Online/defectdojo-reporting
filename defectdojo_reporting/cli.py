@@ -106,15 +106,18 @@ def main():
 
     # project
     parser.add_argument('--lead_testing', help="Lead Testing", required=True)
-    parser.add_argument('--repo', help="Repo Name", required=True)
-    parser.add_argument('--team', help="Team", required=True)
-    parser.add_argument('--tags', help="Tags", required=True)
+    parser.add_argument('--product_type', help="Product Type", required=True)
+    parser.add_argument('--product_name', help="Product Name", required=True)
     parser.add_argument(
-        '--branch_name', help="Reference to branch being scanned", required=True)
+        '--product_description', help="Product Description", required=True)
+    parser.add_argument(
+        '--engagement_name', help="Engagement Name", required=True)
+    parser.add_argument('--tags', help="Tags", required=True)
     
     # importing results
     parser.add_argument('--file', help="Findings file", required=True)
-    parser.add_argument('--test_type_id', help="Test Type ID", required=True, type=int)
+    parser.add_argument(
+        '--test_type_id', help="Test Type ID", required=True, type=int)
     parser.add_argument('--scan_type', help="Scan Type", required=True)
 
     # controls
@@ -137,10 +140,11 @@ def main():
 
     # project
     lead_testing = args["lead_testing"]
-    team = args["team"]
+    product_type = args["product_type"]
+    product_name = args["product_name"]
+    product_description = args["product_description"]
+    engagement_name = args["engagement_name"]
     tags = args["tags"].split(',')
-    repo = args["repo"]
-    branch_name = args["branch_name"]
     
     # importing results
     file = args["file"]
@@ -154,10 +158,11 @@ def main():
     api_client = reporting.get_api_client(host, api_token, ssl_ca_cert)
     user_id = reporting.get_user_id(api_client, lead_testing)
     test_type_obj = reporting.get_test_type(api_client, test_type_id)
-    product_type_id = reporting.get_product_type_id(api_client, team)
-    product_id = reporting.get_product_id(api_client, product_type_id, repo, tags)
+    product_type_id = reporting.get_product_type_id(api_client, product_type)
+    product_id = reporting.get_product_id(
+        api_client, product_type_id, product_name, tags, product_description)
     engagement_id = reporting.get_engagement_id(
-        api_client, product_id, user_id, branch_name)
+        api_client, product_id, user_id, engagement_name)
     test_id = reporting.get_test_id(
         api_client, engagement_id, test_type_obj.name, test_type_obj.id, 1)
     reporting.reimport(

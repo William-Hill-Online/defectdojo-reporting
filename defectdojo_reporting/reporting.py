@@ -23,37 +23,37 @@ def get_user_id(api_client, username):
         raise ValueError('User not found: ' + str(username))
 
 
-def get_product_type_id(api_client, team):
+def get_product_type_id(api_client, product_type):
     api_instance = defectdojo_api_client.ProductTypesApi(api_client)
 
-    product_types = api_instance.product_types_list(name=team)
+    product_types = api_instance.product_types_list(name=product_type)
     if product_types.count == 1:
         return product_types.results[0].id
     else:
         # No product type found, so create a new one
         data = defectdojo_api_client.ProductType(
-            name=team
+            name=product_type
         )
 
         product_type = api_instance.product_types_create(data)
         return product_type.id
 
 
-def get_product_id(api_client, prod_type, repo, tags):
+def get_product_id(api_client, prod_type, product_name, tags, product_description):
     api_instance = defectdojo_api_client.ProductsApi(api_client)
 
-    products = api_instance.products_list(name=repo)
+    products = api_instance.products_list(name=product_name)
     if products.count == 1:
         products.results[0].tags = list(set(products.results[0].tags + tags)) 
         products.results[0].prod_type = prod_type
+        products.results[0].description = product_description
         product = api_instance.products_partial_update(products.results[0].id, products.results[0])
         return products.results[0].id
     else:
         # No product found, so create a new one
-        description = f'{repo}'
         data = defectdojo_api_client.Product(
-            name=repo,
-            description=description,
+            name=product_name,
+            description=product_description,
             prod_type=prod_type,
             tags=tags
         )
@@ -62,11 +62,11 @@ def get_product_id(api_client, prod_type, repo, tags):
         return product.id
 
 
-def get_engagement_id(api_client, product_id, user_id, branch):
+def get_engagement_id(api_client, product_id, user_id, engagement_name):
     api_instance = defectdojo_api_client.EngagementsApi(api_client)
 
     engagements = api_instance.engagements_list(
-        name=branch, product=product_id)
+        name=engagement_name, product=product_id)
     if engagements.count == 1 and \
             engagements.results[0].engagement_type == "CI/CD":
         return engagements.results[0].id
@@ -79,14 +79,14 @@ def get_engagement_id(api_client, product_id, user_id, branch):
         engagement_type = "CI/CD"
 
         data = defectdojo_api_client.Engagement(
-            name=branch,
+            name=engagement_name,
             engagement_type=engagement_type,
             product=product_id,
             lead=user_id,
             status=status,
             target_start=start_date.date(),
             target_end=end_date.date(),
-            branch_tag=branch,
+            branch_tag=engagement_name,
             description=engagement_description
         )
         engagement = api_instance.engagements_create(data)
