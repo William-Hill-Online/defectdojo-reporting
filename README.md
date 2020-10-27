@@ -32,9 +32,22 @@ pip install git+https://github.com/William-Hill-Online/defectdojo-reporting.git
 
 **Example of build failing because the mimimum control level is medium, and there are issues with level medium and high**
 ```
-defectdojo-reporting --host=http://localhost:8080/api/v2 --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 --lead_testing=gitlabci \
---engagement_name=master --product_name="appsec/repo-abc" --file=/tmp/ccvs.json --tags=tag1,tag2 --product_type=appsec-project --test_type_id=181 --control_level=medium \
---ssl_ca_cert="" --product_description="Some description"
+defectdojo-reporting \
+    --ssl_ca_cert="" \
+    --host=http://localhost:8080/api/v2 \
+    --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 \
+    --lead_testing=gitlabci \
+    --engagement_name=master \
+    --product_name="appsec/repo-abc" \
+    --file=/tmp/ccvs.json \
+    --scan_type="CCVS Report" \
+    --tags="tag1,tag2" \
+    --product_type=appsec-project \
+    --control_level=medium \
+    --push_to_jira=0 \
+    --test_type_id=181 \
+    --product_description="Some description"
+
 =============================================================
 Summary
 =============================================================
@@ -65,9 +78,21 @@ Build Failed! :(
 
 **Example of build failing with warning because there no critical issues, but there are issues to fix**
 ```
-defectdojo-reporting --host=http://localhost:8080/api/v2 --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 --lead_testing=gitlabci \
---engagement_name=master --product_name="appsec/repo-abc" --file=/tmp/ccvs.json --tags=tag1,tag2 --product_type=appsec-project --test_type_id=181 --control_level=critical \
---ssl_ca_cert="" --product_description="Some description"
+defectdojo-reporting \
+    --ssl_ca_cert="" \
+    --host=http://localhost:8080/api/v2 \
+    --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 \
+    --lead_testing=gitlabci \
+    --engagement_name=master \
+    --product_name="appsec/repo-abc" \
+    --file=/tmp/ccvs.json \
+    --scan_type="CCVS Report" \
+    --tags="tag1,tag2" \
+    --product_type=appsec-project \
+    --control_level=critical \
+    --push_to_jira=0 \
+    --test_type_id=181 \
+    --product_description="Some description"
 =============================================================
 Summary
 =============================================================
@@ -90,9 +115,22 @@ Build Passed! But there are issues to fix yet :/
 
 **Example of build passing with warning because there no SLAs overdue, but there are issues to fix**
 ```
-defectdojo-reporting --host=http://localhost:8080/api/v2 --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 --lead_testing=gitlabci \
---engagement_name=master --product_name="appsec/repo-abc" --file=/tmp/ccvs.json --tags=tag1,tag2 --product_type=appsec-project --test_type_id=181 --control_level=sla \
---ssl_ca_cert="" --product_description="Some description"
+defectdojo-reporting \
+    --ssl_ca_cert="" \
+    --host=http://localhost:8080/api/v2 \
+    --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 \
+    --lead_testing=gitlabci \
+    --engagement_name=master \
+    --product_name="appsec/repo-abc" \
+    --file=/tmp/ccvs.json \
+    --scan_type="CCVS Report" \
+    --tags="tag1,tag2" \
+    --product_type=appsec-project \
+    --control_level=sla \
+    --push_to_jira=0 \
+    --test_type_id=181 \
+    --product_description="Some description"
+
 =============================================================
 Summary
 =============================================================
@@ -115,9 +153,22 @@ Build Passed! But there are issues to fix yet :/
 
 **Example of build failing because there are SLAs overdue**
 ```
-defectdojo-reporting --host=http://localhost:8080/api/v2 --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 --lead_testing=gitlabci \
---engagement_name=master --product_name="appsec/repo-abc" --file=/tmp/ccvs.json --tags=tag1,tag2 --product_type=appsec-project --test_type_id=181 --control_level=sla \
---ssl_ca_cert="" --product_description="Some description"
+defectdojo-reporting \
+    --ssl_ca_cert="" \
+    --host=http://localhost:8080/api/v2 \
+    --api_token=41f5776a19792fc0fd5e1ea5032d07e2fe4b20f6 \
+    --lead_testing=gitlabci \
+    --engagement_name=master \
+    --product_name="appsec/repo-abc" \
+    --file=/tmp/ccvs.json \
+    --scan_type="CCVS Report" \
+    --tags="tag1,tag2" \
+    --product_type=appsec-project \
+    --control_level=sla \
+    --push_to_jira=0 \
+    --test_type_id=181 \
+    --product_description="Some description"
+
 =============================================================
 Summary
 =============================================================
