@@ -18,7 +18,7 @@ def summary_sla(total_findings):
         print(f"Total number of findings not verified: {len(findings_not_verified)}")
         print("=============================================================")
         print_findings(reporting.sum_severity(findings_not_verified))
-        print("")
+        print("\n")
         print("Build Failed!")
         print("=============================================================")
         exit(1)
@@ -32,7 +32,7 @@ def summary_sla(total_findings):
         print(f"Total number of findings with SLA overdue: {len(findings_sla_overdue)}")
         print("=============================================================")
         print_findings(reporting.sum_severity(findings_sla_overdue))
-        print("")
+        print("\n")
         print("Build Failed! :(")
         print("=============================================================")
         exit(1)
@@ -56,7 +56,7 @@ def summary_level_severity(total_findings, control_level):
         print(f"Total number of findings with control severity violated: {len(findings_filtered)}")
         print("=============================================================")
         print_findings(reporting.sum_severity(findings_filtered))
-        print("")
+        print("\n")
         print("Build Failed! :(")
         print("=============================================================")
         exit(1)
@@ -72,13 +72,13 @@ def summary(api_client, test_id, control_level):
     link = f"{host[0:host.find('/api')]}/test/{test_id}"
     print(f"Dashboard: {link}")
     print(f"Severity Control: {control_level.upper()}")
-    print("")
+    print("\n")
     
     print("=============================================================")
     print(f"Total number of findings: {len(total_findings)}")
     print("=============================================================")
     print_findings(reporting.sum_severity(total_findings))
-    print("")
+    print("\n")
 
     if control_level == 'sla':
         summary_sla(total_findings)
