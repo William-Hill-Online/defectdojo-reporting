@@ -22,9 +22,10 @@ pip install git+https://github.com/William-Hill-Online/defectdojo-reporting.git
 | engagement_name     | Engagement Name                     | string                                       | yes      | master                                   |
 | file                | Findings file                       | string                                       | yes      | /tmp/ccvs.json                           |
 | test_type_id        | Test Type ID                        | int                                          | yes      | 181                                      |
+| jira_project_key    | Jira Project Key                    | string                                       | no       | APPSECBOARD                              |
 | scan_type           | Scan Type                           | string                                       | yes      | CCVS Report                              |
 | control_level       | Minimum level of severity control   | enum(critical, high, medium, low, info, sla) | no       | medium                                   |
-| push_to_jira        | Push to Jira?                       | bool                                         | no       | false                                    |
+| push_to_jira 1      | Push to Jira?                       | bool                                         | no       | false                                    |
 | ssl_ca_cert         | SSL CA Cert File                    | string                                       | yes      | /path/cert.pem                           |
 
 
@@ -44,7 +45,8 @@ defectdojo-reporting \
     --tags="tag1,tag2" \
     --product_type=appsec-project \
     --control_level=medium \
-    --push_to_jira=0 \
+    --push_to_jira=1 \
+    --jira_project_key=APPSECBOARD \
     --test_type_id=181 \
     --product_description="Some description"
 
@@ -90,7 +92,8 @@ defectdojo-reporting \
     --tags="tag1,tag2" \
     --product_type=appsec-project \
     --control_level=critical \
-    --push_to_jira=0 \
+    --push_to_jira=1 \
+    --jira_project_key=APPSECBOARD \
     --test_type_id=181 \
     --product_description="Some description"
 
@@ -127,7 +130,8 @@ defectdojo-reporting \
     --tags="tag1,tag2" \
     --product_type=appsec-project \
     --control_level=sla \
-    --push_to_jira=0 \
+    --push_to_jira=1 \
+    --jira_project_key=APPSECBOARD \
     --test_type_id=181 \
     --product_description="Some description"
 
@@ -164,7 +168,8 @@ defectdojo-reporting \
     --tags="tag1,tag2" \
     --product_type=appsec-project \
     --control_level=sla \
-    --push_to_jira=0 \
+    --push_to_jira=1 \
+    --jira_project_key=APPSECBOARD \
     --test_type_id=181 \
     --product_description="Some description"
 

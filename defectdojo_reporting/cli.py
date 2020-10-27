@@ -111,6 +111,8 @@ def main():
     parser.add_argument(
         '--product_description', help="Product Description", required=True)
     parser.add_argument(
+        '--jira_project_key', help="Jira Project Key", required=True)
+    parser.add_argument(
         '--engagement_name', help="Engagement Name", required=True)
     parser.add_argument('--tags', help="Tags", required=True)
     
@@ -143,6 +145,7 @@ def main():
     product_type = args["product_type"]
     product_name = args["product_name"]
     product_description = args["product_description"]
+    jira_project_key = args["jira_project_key"]
     engagement_name = args["engagement_name"]
     tags = args["tags"].split(',')
     
