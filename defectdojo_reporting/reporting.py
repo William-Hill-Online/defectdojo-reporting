@@ -23,21 +23,73 @@ def get_user_id(api_client, username):
         raise ValueError('User not found: ' + str(username))
 
 
-def get_product_id(api_client, product_id):    
+def get_product_type_id(api_client, product_type):
+    api_instance = defectdojo_api_client.ProductTypesApi(api_client)
+
+    product_types = api_instance.product_types_list(name=product_type)
+    if product_types.count == 1:
+        return product_types.results[0].id
+    else:
+        # No product type found, so create a new one
+        data = defectdojo_api_client.ProductType(
+            name=product_type
+        )
+
+        product_type = api_instance.product_types_create(data)
+        return product_type.id
+
+
+def get_product_id(api_client, prod_type, product_name, tags, product_description):
     api_instance = defectdojo_api_client.ProductsApi(api_client)
-    try:
-        products = api_instance.products_read(id=product_id)
-        return products.id
-    except ApiException:
-        raise ValueError('Product not found: ' + str(product_id))
+
+    products = api_instance.products_list(name=product_name)
+    if products.count == 1:
+        products.results[0].tags = list(set(products.results[0].tags + tags)) 
+        products.results[0].prod_type = prod_type
+        products.results[0].description = product_description
+        product = api_instance.products_partial_update(products.results[0].id, products.results[0])
+        return products.results[0].id
+    else:
+        # No product found, so create a new one
+        data = defectdojo_api_client.Product(
+            name=product_name,
+            description=product_description,
+            prod_type=prod_type,
+            tags=tags
+        )
+
+        product = api_instance.products_create(data)
+        return product.id
 
 
-def get_engagement_id(api_client, product_id, user_id, repo, branch):
-    engagement_branch = f'{repo} ({branch})'
+def get_jira_product_id(api_client, product_id, jira_project_key):
+    api_instance = defectdojo_api_client.JiraProductConfigurationsApi(api_client)
+
+    jira_configs = api_instance.jira_product_configurations_list(product=product_id)
+    import pdb; pdb.set_trace()
+    if jira_configs.count == 1:
+        jira_configs.results[0].conf = 1
+        jira_configs.results[0].project_key = jira_project_key
+        
+        api_instance.jira_product_configurations_update(jira_configs.results[0].id, jira_configs.results[0])
+        
+        return jira_configs.results[0].id
+    else:
+        data = defectdojo_api_client.JIRA(
+            project_key=jira_project_key,
+            product=product_id,
+            conf=1
+        )
+        jira_config = api_instance.jira_product_configurations_create(data)
+        
+        return jira_config.id
+
+
+def get_engagement_id(api_client, product_id, user_id, engagement_name):
     api_instance = defectdojo_api_client.EngagementsApi(api_client)
 
     engagements = api_instance.engagements_list(
-        name=engagement_branch, product=product_id)
+        name=engagement_name, product=product_id)
     if engagements.count == 1 and \
             engagements.results[0].engagement_type == "CI/CD":
         return engagements.results[0].id
@@ -50,14 +102,14 @@ def get_engagement_id(api_client, product_id, user_id, repo, branch):
         engagement_type = "CI/CD"
 
         data = defectdojo_api_client.Engagement(
-            name=engagement_branch,
+            name=engagement_name,
             engagement_type=engagement_type,
             product=product_id,
             lead=user_id,
             status=status,
             target_start=start_date.date(),
             target_end=end_date.date(),
-            branch_tag=branch,
+            branch_tag=engagement_name,
             description=engagement_description
         )
         engagement = api_instance.engagements_create(data)
@@ -84,7 +136,7 @@ def get_test_id(api_client, engagement_id, test_name, test_type_id, environment)
             target_start=target_start,
             target_end=target_end
         )
-        
+
         test = api_instance.tests_create(data)
         return test.id
 
@@ -101,8 +153,8 @@ def get_test_type(api_client, test_type_id):
 def reimport(api_client, test_id, file, active, scan_type, push_to_jira):
     date = datetime.now()
 
-    api_instance = defectdojo_api_client.ReimportScanApi(api_client)    
-    
+    api_instance = defectdojo_api_client.ReimportScanApi(api_client)
+
     scan = api_instance.reimport_scan_create(
         test=test_id,
         scan_type=scan_type,

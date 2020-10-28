@@ -18,7 +18,7 @@ def summary_sla(total_findings):
         print(f"Total number of findings not verified: {len(findings_not_verified)}")
         print("=============================================================")
         print_findings(reporting.sum_severity(findings_not_verified))
-        print("")
+        print("\n")
         print("Build Failed!")
         print("=============================================================")
         exit(1)
@@ -32,7 +32,7 @@ def summary_sla(total_findings):
         print(f"Total number of findings with SLA overdue: {len(findings_sla_overdue)}")
         print("=============================================================")
         print_findings(reporting.sum_severity(findings_sla_overdue))
-        print("")
+        print("\n")
         print("Build Failed! :(")
         print("=============================================================")
         exit(1)
@@ -56,7 +56,7 @@ def summary_level_severity(total_findings, control_level):
         print(f"Total number of findings with control severity violated: {len(findings_filtered)}")
         print("=============================================================")
         print_findings(reporting.sum_severity(findings_filtered))
-        print("")
+        print("\n")
         print("Build Failed! :(")
         print("=============================================================")
         exit(1)
@@ -72,13 +72,13 @@ def summary(api_client, test_id, control_level):
     link = f"{host[0:host.find('/api')]}/test/{test_id}"
     print(f"Dashboard: {link}")
     print(f"Severity Control: {control_level.upper()}")
-    print("")
+    print("\n")
     
     print("=============================================================")
     print(f"Total number of findings: {len(total_findings)}")
     print("=============================================================")
     print_findings(reporting.sum_severity(total_findings))
-    print("")
+    print("\n")
 
     if control_level == 'sla':
         summary_sla(total_findings)
@@ -106,15 +106,20 @@ def main():
 
     # project
     parser.add_argument('--lead_testing', help="Lead Testing", required=True)
+    parser.add_argument('--product_type', help="Product Type", required=True)
+    parser.add_argument('--product_name', help="Product Name", required=True)
     parser.add_argument(
-        '--product', help="DefectDojo Product ID", required=True, type=int)
-    parser.add_argument('--repo', help="Repo Name", required=True)
+        '--product_description', help="Product Description", required=True)
     parser.add_argument(
-        '--branch_name', help="Reference to branch being scanned", required=True)
+        '--jira_project_key', help="Jira Project Key", required=True)
+    parser.add_argument(
+        '--engagement_name', help="Engagement Name", required=True)
+    parser.add_argument('--tags', help="Tags", required=True)
     
     # importing results
     parser.add_argument('--file', help="Findings file", required=True)
-    parser.add_argument('--test_type_id', help="Test Type ID", required=True, type=int)
+    parser.add_argument(
+        '--test_type_id', help="Test Type ID", required=True, type=int)
     parser.add_argument('--scan_type', help="Scan Type", required=True)
 
     # controls
@@ -137,9 +142,12 @@ def main():
 
     # project
     lead_testing = args["lead_testing"]
-    product = args["product"]
-    repo = args["repo"]
-    branch_name = args["branch_name"]
+    product_type = args["product_type"]
+    product_name = args["product_name"]
+    product_description = args["product_description"]
+    jira_project_key = args["jira_project_key"]
+    engagement_name = args["engagement_name"]
+    tags = args["tags"].split(',')
     
     # importing results
     file = args["file"]
@@ -153,9 +161,12 @@ def main():
     api_client = reporting.get_api_client(host, api_token, ssl_ca_cert)
     user_id = reporting.get_user_id(api_client, lead_testing)
     test_type_obj = reporting.get_test_type(api_client, test_type_id)
-    product_id = reporting.get_product_id(api_client, product)
+    product_type_id = reporting.get_product_type_id(api_client, product_type)
+    product_id = reporting.get_product_id(
+        api_client, product_type_id, product_name, tags, product_description)
+    reporting.get_jira_product_id(api_client, product_id, jira_project_key)
     engagement_id = reporting.get_engagement_id(
-        api_client, product_id, user_id, repo, branch_name)
+        api_client, product_id, user_id, engagement_name)
     test_id = reporting.get_test_id(
         api_client, engagement_id, test_type_obj.name, test_type_obj.id, 1)
     reporting.reimport(
