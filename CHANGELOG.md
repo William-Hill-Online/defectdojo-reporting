@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [0.4.0] - 2020-10-28
+### Added
+- Add option to create product
+- Add option to configure product with description and jira config
+
 ## [0.3.0] - 2020-07-21
 ### Added
 - Add Scan Type in CLI
@@ -24,7 +29,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - First version
 
-[unreleased]: https://github.com/william-Hill-Online/defectdojo-reporting/compare/v0.3.0...HEAD
+[unreleased]: https://github.com/william-Hill-Online/defectdojo-reporting/compare/v0.4.0...HEAD
+[0.3.0]: https://github.com/william-Hill-Online/defectdojo-reporting/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/william-Hill-Online/defectdojo-reporting/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/william-Hill-Online/defectdojo-reporting/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/william-Hill-Online/defectdojo-reporting/compare/v0.1.0...v0.2.0
