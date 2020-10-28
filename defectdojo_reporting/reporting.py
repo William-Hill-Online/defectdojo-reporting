@@ -62,6 +62,29 @@ def get_product_id(api_client, prod_type, product_name, tags, product_descriptio
         return product.id
 
 
+def get_jira_product_id(api_client, product_id, jira_project_key):
+    api_instance = defectdojo_api_client.JiraProductConfigurationsApi(api_client)
+
+    jira_configs = api_instance.jira_product_configurations_list(product=product_id)
+    import pdb; pdb.set_trace()
+    if jira_configs.count == 1:
+        jira_configs.results[0].conf = 1
+        jira_configs.results[0].project_key = jira_project_key
+        
+        api_instance.jira_product_configurations_update(jira_configs.results[0].id, jira_configs.results[0])
+        
+        return jira_configs.results[0].id
+    else:
+        data = defectdojo_api_client.JIRA(
+            project_key=jira_project_key,
+            product=product_id,
+            conf=1
+        )
+        jira_config = api_instance.jira_product_configurations_create(data)
+        
+        return jira_config.id
+
+
 def get_engagement_id(api_client, product_id, user_id, engagement_name):
     api_instance = defectdojo_api_client.EngagementsApi(api_client)
 

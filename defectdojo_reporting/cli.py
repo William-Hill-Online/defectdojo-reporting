@@ -164,6 +164,7 @@ def main():
     product_type_id = reporting.get_product_type_id(api_client, product_type)
     product_id = reporting.get_product_id(
         api_client, product_type_id, product_name, tags, product_description)
+    reporting.get_jira_product_id(api_client, product_id, jira_project_key)
     engagement_id = reporting.get_engagement_id(
         api_client, product_id, user_id, engagement_name)
     test_id = reporting.get_test_id(
