@@ -66,7 +66,6 @@ def get_jira_product_id(api_client, product_id, jira_project_key):
     api_instance = defectdojo_api_client.JiraProductConfigurationsApi(api_client)
 
     jira_configs = api_instance.jira_product_configurations_list(product=product_id)
-    import pdb; pdb.set_trace()
     if jira_configs.count == 1:
         jira_configs.results[0].conf = 1
         jira_configs.results[0].project_key = jira_project_key
